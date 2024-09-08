@@ -27,7 +27,8 @@ public class LoginController {
         loginProcessor.setPassword(password);
         boolean success = loginProcessor.login();
         if(success) {
-            page.addAttribute("message", "Login Successful");
+            //page.addAttribute("message", "Login Successful");
+            return  "redirect:/main";
         }else {
             page.addAttribute("message", "Login FAILED");
         }
