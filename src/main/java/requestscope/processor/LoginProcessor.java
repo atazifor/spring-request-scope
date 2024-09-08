@@ -3,14 +3,17 @@ package requestscope.processor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 import requestscope.service.LoggedUserManagementService;
+import requestscope.service.LoginCountService;
 
 @Component
 @RequestScope
 public class LoginProcessor {
 
     private final LoggedUserManagementService loggedUserManagementService;
-    public LoginProcessor(LoggedUserManagementService loggedUserManagementService)  {
+    private final LoginCountService loginCountService;
+    public LoginProcessor(LoggedUserManagementService loggedUserManagementService, LoginCountService loginCountService)  {
         this.loggedUserManagementService  = loggedUserManagementService;
+        this.loginCountService = loginCountService;
     }
     private String  username;
     private String password;
@@ -33,6 +36,7 @@ public class LoginProcessor {
 
 
     public boolean login() {
+        loginCountService.increment();
         String username = this.getUsername();
         String password = this.getPassword();
         if("amin".equals(username) && "password".equals(password)) {
